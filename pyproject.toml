@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "eibon"
+version = "0.1.0"
+description = "Crash reporter tool"
+authors = ["Sergey <resh.sersh@gmail.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.4.1"
+pytest-cov = "^2.8.1"
+mypy = "^0.770"
+pylint = "^2.5.0"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"

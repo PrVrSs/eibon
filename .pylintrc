@@ -1,0 +1,25 @@
+[MESSAGES CONTROL]
+
+# Disable the message, report, category or checker with the given id(s).
+disable=
+    abstract-method,
+    access-member-before-definition,
+    bad-mcs-classmethod-argument,
+    empty-docstring,
+    inconsistent-return-statements,
+    missing-docstring,
+    no-else-return,
+    no-member,
+    no-value-for-parameter,
+    too-few-public-methods,
+    unsubscriptable-object,
+
+
+[TYPECHECK]
+
+# List of module names for which member attributes should not be checked
+# (useful for modules/projects where namespaces are manipulated during runtime
+# and thus existing member attributes cannot be deduced by static analysis). It
+# supports qualified module names, as well as Unix pattern matching.
+ignored-modules=
+    gdb,
