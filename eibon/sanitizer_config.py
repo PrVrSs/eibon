@@ -3,21 +3,21 @@ import os
 import re
 from collections.abc import Mapping
 from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Iterator, Optional
 
 
 class SanitizerMapping(Mapping):
 
-    def __init__(self, /, **kwargs):
+    def __init__(self, /, **kwargs: Any):
         self._data = kwargs
 
-    def __getitem__(self, item):
+    def __getitem__(self, item: str) -> str:
         return self._data[item]
 
-    def __iter__(self):
+    def __iter__(self) -> Iterator[str]:
         return iter(self._data)
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self._data)
 
     @property
@@ -28,8 +28,9 @@ class SanitizerMapping(Mapping):
 class SanitizerEnvironment:
 
     def __init__(
-            self, target_dir: str,
-            custom_config: Optional[Dict[str, str]] = None
+            self,
+            target_dir: str,
+            custom_config: Optional[Dict[str, str]] = None,
     ):
         self._env = os.environ.copy()
 
@@ -98,8 +99,9 @@ class SanitizerEnvironment:
             }
         ).options
 
-    def _address_sanitizer_defaults(self) -> SanitizerMapping:
-        return self._make_sanitizer_mapping(
+    @staticmethod
+    def _address_sanitizer_defaults() -> SanitizerMapping:
+        return SanitizerMapping(
             abort_on_error='false',
             allocator_may_return_null='true',
             check_initialization_order='true',
@@ -121,19 +123,22 @@ class SanitizerEnvironment:
             unmap_shadow_on_exit='true'
         )
 
-    def _leak_sanitizer_defaults(self) -> SanitizerMapping:
-        return self._make_sanitizer_mapping(
+    @staticmethod
+    def _leak_sanitizer_defaults() -> SanitizerMapping:
+        return SanitizerMapping(
             max_leaks='1',
             print_suppressions='false',
         )
 
-    def _thread_sanitizer_defaults(self) -> SanitizerMapping:
-        return self._make_sanitizer_mapping(
+    @staticmethod
+    def _thread_sanitizer_defaults() -> SanitizerMapping:
+        return SanitizerMapping(
             halt_on_error='1',
         )
 
-    def _ub_sanitizer_defaults(self) -> SanitizerMapping:
-        return self._make_sanitizer_mapping(
+    @staticmethod
+    def _ub_sanitizer_defaults() -> SanitizerMapping:
+        return SanitizerMapping(
             print_stacktrace='1',
         )
 
@@ -167,10 +172,6 @@ class SanitizerEnvironment:
                 logging.warning("Malformed option in %r", key)
 
         return options
-
-    @staticmethod
-    def _make_sanitizer_mapping(**kwargs: Any) -> SanitizerMapping:
-        return SanitizerMapping(**kwargs)
 
 
 def is_quoted(token: str) -> bool:

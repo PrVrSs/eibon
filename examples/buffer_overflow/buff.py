@@ -6,14 +6,8 @@ from eibon.debuger import GDBObject
 
 async def main():
     binary = Path(__file__).parent.resolve() / 'buff'
-    args = [
-        'a' * 400,
-    ]
-
-    async with await GDBObject().launch(str(binary), args) as proc:
-        stdout, stderr = await proc.communicate()
-        print(stdout)
-        print(stderr)
+    response = await GDBObject().launch(str(binary), additional_args=['a' * 40])
+    print(response)
 
 
 if __name__ == '__main__':

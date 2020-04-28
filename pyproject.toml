@@ -2,8 +2,8 @@
 name = "eibon"
 version = "0.1.0"
 description = "Crash reporter tool"
-authors = ["Sergey <resh.sersh@gmail.com>"]
-license = "MIT"
+authors = ["Sergey Reshetnikov <resh.sersh@gmail.com>"]
+license = "Apache-2.0"
 
 [tool.poetry.dependencies]
 python = "^3.8"
